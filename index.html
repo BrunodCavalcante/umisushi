@@ -1,0 +1,2119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <!-- ===================================
+         CONFIGURAÇÕES HTML E SEO
+         ===================================
+         - Charset UTF-8 para suporte a acentos
+         - Viewport responsivo para mobile
+         - Título e descrição para SEO
+         - Open Graph para redes sociais
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMI Sushi Bar - Pedidos Online</title>
+    <meta name="description" content="Faça seu pedido online no UMI Sushi Bar. Sushi, sashimi, maki e combos frescos para entrega e retirada.">
+    
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Open Graph para compartilhamento em redes sociais -->
+    <meta property="og:title" content="UMI Sushi Bar - Pedidos Online">
+    <meta property="og:description" content="Faça seu pedido online no UMI Sushi Bar. Sushi, sashimi, maki e combos frescos para entrega e retirada.">
+    <meta property="og:type" content="website">
+    
+    <!-- ===================================
+         FRAMEWORK CSS
+         ===================================
+         - TailwindCSS CDN para estilização rápida
+         - Sistema de design customizado com cores temáticas de sushi
+    -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* ===================================
+           SISTEMA DE DESIGN PARA UMI SUSHI BAR
+           ===================================
+           - Paleta de cores tema sushi (verdes, brancos)
+           - Gradientes para visual moderno
+           - Efeitos hover e transições
+           - Responsividade mobile-first
+        */
+        :root {
+            /* ===================================
+               VARIÁVEIS CSS (DESIGN TOKENS)
+               ===================================
+               - Todas as cores em formato HSL
+               - Cores principais tema sushi (verde)
+               - Suporte automático a modo claro/escuro
+            */
+            
+            /* Cores base do layout */
+            --background: 0 0% 100%;
+            --foreground: 222.2 84% 4.9%;
+            
+            /* Cores primárias tema sushi (verde) */
+            --primary: 142 76% 36%;
+            --primary-foreground: 210 40% 98%;
+            --primary-glow: 142 86% 45%;
+            
+            /* Success color for prices */
+            --success: 142 76% 36%;
+            --success-foreground: 210 40% 98%;
+            
+            /* Card and surface colors */
+            --card: 0 0% 100%;
+            --card-foreground: 222.2 84% 4.9%;
+            
+            --secondary: 210 40% 96.1%;
+            --secondary-foreground: 222.2 47.4% 11.2%;
+            
+            --muted: 210 40% 96.1%;
+            --muted-foreground: 215.4 16.3% 46.9%;
+            
+            --accent: 210 40% 96.1%;
+            --accent-foreground: 222.2 47.4% 11.2%;
+            
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 210 40% 98%;
+            
+            --border: 214.3 31.8% 91.4%;
+            --input: 214.3 31.8% 91.4%;
+            --ring: 142 76% 36%;
+            
+            --radius: 0.5rem;
+        }
+
+        body {
+            background: linear-gradient(135deg, hsl(210, 40%, 98%) 0%, hsl(220, 13%, 95%) 100%);
+            color: hsl(var(--foreground));
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .gradient-card {
+            background: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(210, 40%, 99%) 100%);
+        }
+
+        .gradient-logo {
+            background: linear-gradient(135deg, hsl(142, 76%, 36%) 0%, hsl(160, 70%, 45%) 100%);
+        }
+
+        .btn-sushi {
+            background: linear-gradient(135deg, hsl(142, 76%, 36%) 0%, hsl(142, 86%, 45%) 100%);
+            color: hsl(var(--primary-foreground));
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-sushi:hover {
+            box-shadow: 0 0 20px hsl(142, 86%, 45%, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .shadow-card {
+            box-shadow: 0 1px 3px 0 hsl(222.2, 84%, 4.9%, 0.1), 0 1px 2px 0 hsl(222.2, 84%, 4.9%, 0.06);
+        }
+
+        .shadow-elegant {
+            box-shadow: 0 4px 25px -4px hsl(142, 76%, 36%, 0.25);
+        }
+
+        .text-success {
+            color: hsl(var(--success));
+        }
+
+        .input-field {
+            background: hsl(var(--secondary));
+            border: 1px solid hsl(var(--border));
+            color: hsl(var(--foreground));
+        }
+
+        .input-field:focus {
+            border-color: hsl(var(--primary));
+            outline: none;
+            box-shadow: 0 0 0 1px hsl(var(--primary));
+        }
+
+        .hidden { display: none; }
+        .block { display: block; }
+
+        /* Product card hover effects */
+        .product-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 25px -4px hsl(142, 76%, 36%, 0.25);
+        }
+
+        /* Quantity controls */
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid hsl(var(--border));
+            background: transparent;
+            color: hsl(var(--foreground));
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .qty-btn:hover {
+            background: hsl(var(--secondary));
+        }
+
+        .qty-btn.destructive:hover {
+            background: hsl(var(--destructive));
+            color: hsl(var(--destructive-foreground));
+        }
+
+        .qty-btn.primary:hover {
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+        }
+
+        .scroll-area {
+            max-height: 320px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .scroll-area::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scroll-area::-webkit-scrollbar-track {
+            background: hsl(var(--secondary));
+            border-radius: 3px;
+        }
+
+        .scroll-area::-webkit-scrollbar-thumb {
+            background: hsl(var(--muted-foreground));
+            border-radius: 3px;
+        }
+
+        .scroll-area::-webkit-scrollbar-thumb:hover {
+            background: hsl(var(--primary));
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- ===================================
+         CONTAINER PRINCIPAL
+         ===================================
+         - Layout responsivo com max-width
+         - Padding adequado para mobile/desktop
+    -->
+    <div class="container mx-auto max-w-7xl px-4 py-6">
+        
+        <!-- ===================================
+             CABEÇALHO COM LOGO E BUSCA
+             ===================================
+             - Logo do restaurante (logo.jpeg)
+             - Campo de busca com filtro em tempo real
+             - Badge para mostrar resultados da busca
+        -->
+        <header class="gradient-card border border-gray-300 rounded-xl p-4 shadow-card mb-6">
+            <div class="flex items-center gap-4">
+                <!-- ===================================
+                     ÁREA DO LOGO E NOME
+                     ===================================
+                     - Logo em formato JPEG (substitua logo.jpeg pelo seu arquivo)
+                     - Tamanho fixo: altura 16 (64px)
+                     - Nome e slogan do restaurante
+                -->
+                <div class="flex items-center gap-3">
+                    <!-- CONFIGURAÇÃO DA LOGO:
+                         Para trocar a logo, substitua o arquivo "logo.jpeg" 
+                         na pasta raiz por sua logo retangular em formato JPEG -->
+                    <img src="logo.jpg" alt="Logo UMI Sushi Bar" class="h-16  " />
+                    <div>
+                        <!-- <h1 class="text-xl font-bold text-gray-900">UMI Sushi Bar</h1> -->
+                        <p class="text-sm text-gray-600">Pedidos online • Retirada e entrega</p>
+                    </div>
+                </div>
+                
+                <!-- ===================================
+                     CAMPO DE BUSCA
+                     ===================================
+                     - Busca em tempo real por nome e descrição
+                     - Filtro automático dos produtos
+                     - Badge mostra quantos resultados encontrou
+                -->
+                <div class="flex-1 max-w-lg relative">
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            id="search-input"
+                            placeholder="Buscar por item (ex.: salmão, combo, sashimi)"
+                            class="input-field rounded-lg px-3 py-2 w-full"
+                        />
+                    </div>
+                    
+                    <div id="search-badge" class="flex items-center gap-2 mt-2 hidden">
+                        <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700 border border-gray-300 gap-2">
+                            <span id="search-text">Buscando: ""</span>
+                            <button id="clear-search" class="h-4 w-4 p-0 hover:bg-red-500 hover:text-white rounded-full flex items-center justify-center">
+                                ×
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===================================
+             LAYOUT PRINCIPAL (2 COLUNAS)
+             ===================================
+             - Grid responsivo: 1 coluna no mobile, 2 no desktop
+             - Coluna esquerda: Menu de produtos
+             - Coluna direita: Formulário + Carrinho + Checkout
+        -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <!-- ===================================
+                 COLUNA ESQUERDA: MENU DE PRODUTOS
+                 ===================================
+                 - Catálogo organizado por categorias
+                 - Cards de produtos com imagens
+                 - Sistema de busca/filtro
+                 - Botões de adicionar ao carrinho
+            -->
+            <section class="space-y-6">
+                <div class="gradient-card border border-gray-300 rounded-xl p-6 shadow-card">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        Menu Digital
+                        <!-- Badge mostra quantidade de resultados da busca -->
+                        <span id="results-badge" class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700 hidden"></span>
+                    </h2>
+
+                    <!-- ===================================
+                         MENSAGEM: NENHUM RESULTADO
+                         ===================================
+                         - Aparece quando busca não encontra produtos
+                         - Sugere termos de busca populares
+                    -->
+                    <div id="no-results" class="text-center py-12 text-gray-500 hidden">
+                        <p class="text-lg mb-2">Nenhum item encontrado</p>
+                        <p class="text-sm">Tente buscar por: "salmão", "combo", "sashimi" ou "maki"</p>
+                    </div>
+
+                    <!-- ===================================
+                         CONTAINER DO MENU
+                         ===================================
+                         - Produtos organizados por categoria
+                         - Grid responsivo de cards
+                         - Preenchido dinamicamente pelo JavaScript
+                    -->
+                    <div id="menu-container" class="space-y-8">
+                        <!-- Os produtos serão inseridos aqui pelo JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================================
+                 COLUNA DIREITA: FORMULÁRIO + CARRINHO + CHECKOUT
+                 ===================================
+                 - Formulário de dados do cliente
+                 - Carrinho de compras
+                 - Botão de finalizar pedido via WhatsApp
+            -->
+            <aside class="space-y-6">
+                
+                <!-- ===================================
+                     FORMULÁRIO DE DADQS DO CLIENTE
+                     ===================================
+                     - Nome, telefone, hashis, adaptador
+                     - Forma de pagamento
+                     - Tipo de entrega (retirada/entrega)
+                     - Endereço (se entrega)
+                     - Observações extras
+                -->
+                <div class="gradient-card border border-gray-300 rounded-xl shadow-card">
+                    <div class="p-4 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold">
+                            Dados do pedido
+                        </h3>
+                    </div>
+                    
+                    <div class="p-4 space-y-4">
+                        <!-- Nome -->
+                        <div class="space-y-2">
+                            <label for="customer-name" class="text-sm font-medium block">Nome completo</label>
+                            <input id="customer-name" type="text" placeholder="Seu nome" class="input-field rounded-lg px-3 py-2 w-full" />
+                        </div>
+                        
+                        <!-- Telefone -->
+                        <div class="space-y-2">
+                            <label for="customer-phone" class="text-sm font-medium block">Telefone (WhatsApp)</label>
+                            <input id="customer-phone" type="tel" placeholder="(11) 98765-4321" class="input-field rounded-lg px-3 py-2 w-full" />
+                        </div>
+
+                        <!-- Quantidade de Hashis -->
+                        <div class="space-y-2">
+                            <label for="hashis" class="text-sm font-medium block">Quantos Hashis</label>
+                            <select id="hashis" class="input-field rounded-lg px-3 py-2 w-full">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+
+                            </select>
+                        </div>
+
+                        <!-- Adaptador -->
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium block">Adaptador</label>
+                            <div class="flex items-center gap-4">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="adaptador" value="nao" checked class="text-green-600" />
+                                    <span class="text-sm">Não</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="adaptador" value="sim" class="text-green-600" />
+                                    <span class="text-sm">Sim</span>
+                                </label>
+                            </div>
+                            
+                            <div id="qtd-adaptador-container" class="mt-2 hidden">
+                                <label for="qtd-adaptador" class="text-xs text-gray-500 block">Quantos adaptadores?</label>
+                                <select id="qtd-adaptador" class="input-field rounded-lg px-3 py-2 w-full mt-1">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Forma de pagamento -->
+                        <div class="space-y-2">
+                            <label for="forma-pagamento" class="text-sm font-medium block">Forma de pagamento</label>
+                            <select id="forma-pagamento" class="input-field rounded-lg px-3 py-2 w-full">
+                                <option value="">Selecione</option>
+                                <option value="dinheiro">Dinheiro</option>
+                                <option value="pix">PIX</option>
+                                <option value="cartao-credito">Cartão de Crédito</option>
+                                <option value="cartao-debito">Cartão de Débito</option>
+                            </select>
+                        </div>
+
+                        <!-- Tipo de entrega -->
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium block">Entrega ou Retirada?</label>
+                            <div class="flex items-center gap-4">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="tipoEntrega" value="retirada" class="text-green-600" />
+                                    <span class="text-sm">Retirada</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="tipoEntrega" value="entrega" class="text-green-600" />
+                                    <span class="text-sm">Entrega</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Endereço para entrega -->
+                        <div id="endereco-container" class="space-y-3 p-3 bg-gray-50 rounded-lg border border-gray-300 hidden">
+                            <label class="text-sm font-medium text-green-600 block">Dados para entrega</label>
+                            
+                            <div id="taxa-entrega-nota" class="text-sm text-gray-600 bg-yellow-100 border border-yellow-300 rounded-md p-2 mt-2">
+    📢 <strong>Aviso:</strong> Uma taxa de R$ 4,00 será adicionada para entrega. 
+    Para os bairros <strong>Antônia de Souza Barbosa</strong>, <strong>Parque Industrial</strong> 
+    ou áreas <strong>fora do perímetro urbano</strong>, será incluída uma taxa adicional ao total do pedido.
+</div>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label for="rua" class="text-xs text-gray-500 block">Rua</label>
+                                    <input id="rua" type="text" placeholder="Nome da rua" class="input-field rounded-lg px-3 py-2 w-full text-sm" />
+                                </div>
+                                
+                                <div>
+                                    <label for="numero" class="text-xs text-gray-500 block">Número</label>
+                                    <input id="numero" type="text" placeholder="Nº" class="input-field rounded-lg px-3 py-2 w-full text-sm" />
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="bairro" class="text-xs text-gray-500 block">Bairro</label>
+                                <input id="bairro" type="text" placeholder="Nome do bairro" class="input-field rounded-lg px-3 py-2 w-full text-sm" />
+                            </div>
+                            
+                            <div>
+                                <label for="ponto-referencia" class="text-xs text-gray-500 block">Ponto de referência</label>
+                                <input id="ponto-referencia" type="text" placeholder="Ex.: próximo ao mercado" class="input-field rounded-lg px-3 py-2 w-full text-sm" />
+                            </div>
+                        </div>
+
+                        <!-- Informações extras -->
+                        <div class="space-y-2">
+                            <label for="info-extra" class="text-sm font-medium block">Alguma informação extra</label>
+                            <textarea id="info-extra" placeholder="Observações, preferências, alergias..." class="input-field rounded-lg px-3 py-2 w-full text-sm resize-none" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart -->
+                <div class="gradient-card border border-gray-300 rounded-xl shadow-card">
+                    <div class="p-4 border-b border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-semibold">
+                                Seu pedido
+                            </h3>
+                            
+                            <div class="flex items-center gap-2">
+                                <span id="cart-badge" class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700">0 itens</span>
+                                <button id="clear-cart" class="px-2 py-1 text-xs rounded border border-gray-300 hover:bg-red-500 hover:text-white transition-colors hidden">Esvaziar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4">
+                        <!-- Empty cart message -->
+                        <div id="empty-cart" class="text-center py-8 text-gray-500">
+                            <svg class="h-12 w-12 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5-6m0 0h18m-7 13a2 2 0 100-4 2 2 0 000 4zm-8 0a2 2 0 100-4 2 2 0 000 4z"></path>
+                            </svg>
+                            <p>Seu carrinho está vazio.</p>
+                            <p class="text-sm">Adicione itens do menu acima.</p>
+                        </div>
+
+                        <!-- Cart items -->
+                        <div id="cart-items" class="scroll-area space-y-3 hidden">
+                            <!-- Cart items will be populated by JavaScript -->
+                        </div>
+
+                        <!-- Cart total -->
+                        <div id="cart-total" class="mt-4 p-3 border border-dashed border-gray-300 rounded-lg bg-gray-50 hidden">
+                            <div class="flex items-center justify-between text-lg font-bold">
+                                <span>Total</span>
+                                <span id="total-price" class="text-success">R$ 0,00</span>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">
+                                Taxas de entrega ou pagamento são definidas fora deste sistema.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checkout -->
+                <div class="space-y-4">
+                    <button id="checkout-btn" class="w-full btn-sushi text-base font-semibold py-6 rounded-lg" disabled>
+                        Finalizar pedido via WhatsApp
+                    </button>
+                    
+                    <p class="text-xs text-center text-gray-500">
+                        Ao finalizar, abriremos o WhatsApp para o número do restaurante com a mensagem do pedido completa.
+                    </p>
+                    
+                    <div id="validation-alerts" class="space-y-2">
+                        <!-- Validation alerts will be populated by JavaScript -->
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- ===================================
+             RODAPÉ
+             ===================================
+             - Informações sobre o sistema
+             - Pode ser personalizado com dados do restaurante
+        -->
+        <footer class="mt-12 text-center text-sm text-gray-500">
+            <p>Transformando pedidos em experiências inesquecíveis ❤️. </p>
+            <p class="text-xs mt-1"> </p>
+        </footer>
+    </div>
+    
+    <!-- ===================================
+         SCRIPT JAVASCRIPT PRINCIPAL
+         ===================================
+         - Todas as funcionalidades em JavaScript vanilla
+         - Sistema de carrinho com localStorage
+         - Validação de formulário
+         - Integração com WhatsApp
+         - Busca e filtros em tempo real
+    -->
+
+    <script>
+        /*-- ===================================
+             CATÁLOGO DE PRODUTOS
+             ===================================
+             IMPORTANTE: Para adicionar/alterar produtos:
+             
+             1. ADICIONAR NOVA CATEGORIA:
+                - Crie um novo objeto no array CATALOG
+                - Defina o nome da categoria
+                - Adicione os itens da categoria
+             
+             2. ADICIONAR NOVO PRODUTO:
+                - Adicione um objeto no array "items" da categoria
+                - Configure: id, name, description, price, image
+             
+             3. CONFIGURAR IMAGENS DOS PRODUTOS:
+                - Coloque as imagens JPEG na pasta raiz do projeto
+                - Nome sugerido: categoria+produto.jpeg (ex: sushi_salmao.jpeg)
+                - Tamanho recomendado: 300x300px ou 400x400px
+                - Formato: JPEG para otimização
+                - Qualidade: 80-90% para balance tamanho/qualidade
+             
+             EXEMPLO DE PRODUTO:
+             {
+                 id: 'sushi-salmao',              // ID único
+                 name: 'Sushi de Salmão',         // Nome exibido
+                 description: 'Arroz e salmão',   // Descrição
+                 price: 8.90,                     // Preço em R$
+                 image: 'sushi_salmao.jpeg'       // Arquivo da imagem
+             }
+        --> */
+        
+        // ===================================
+        // CONFIGURAÇÃO DO WHATSAPP
+        // ===================================
+        // ALTERE AQUI: Coloque o número do WhatsApp do seu restaurante
+        // Formato: código do país + DDD + número (sem espaços ou caracteres especiais)
+        const RESTAURANT_WHATSAPP = '5567996423170';
+        
+        // ===================================
+        // CATÁLOGO DE PRODUTOS
+        // ===================================
+        // CONFIGURAÇÃO DE IMAGENS:
+        // - Coloque todas as imagens na pasta raiz do projeto
+        // - Use formato JPEG para otimização
+        // - Tamanho recomendado: 300x300px ou 400x400px  
+        // - As imagens mantêm o tamanho fixo: 80x80px (w-20 h-20)
+        //
+        // PARA ADICIONAR NOVOS PRODUTOS:
+        // 1. Adicione a imagem JPEG na pasta raiz
+        // 2. Adicione o produto no array da categoria correspondente
+        // 3. Configure: id, name, description, price, image
+        const CATALOG = [
+            {
+                category: 'Rodízio em casa',
+                items: [
+                    {
+                        id: 'rodizio',
+                        name: 'Rodízio em casa',
+                        description: '50 unidades variadas do rodízio simples',
+                        price: 79.90,
+                        image: 'rodizio.jpeg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+
+                ]
+            }
+            ,
+
+
+
+
+            {
+                category: 'Entradas e Porções',
+                items: [
+                    {
+                        id: 'cevichetilapia',
+                        name: 'Ceviche de Tilápia 200g.',
+                        description: 'Tilápia fresca, molho especial e temperos',
+                        price: 40.00,
+                        image: 'tilapia.jpeg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                     {
+                        id: 'carpaccios',
+                        name: 'Carpaccio de salmão 8 unidades.',
+                        description: 'Molho ponzu, azeite, flor de sal, raspas de limão siciliano e cebolinha',
+                        price: 38.00,
+                        image: 'carpaccios.jpeg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                     {
+                        id: 'carpacciot',
+                        name: 'Carpaccio de salmão trufado 8 unidades.',
+                        description: 'Molho ponzu, azeite, flor de sal, raspas de limão siciliano, ovas de peixe e cebolinha',
+                        price: 40.00,
+                        image: 'carpacciot.jpg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                     {
+                        id: 'sunomonop',
+                        name: 'Sunomono de pepino.',
+                        description: ' ',
+                        price: 10.00,
+                        image: 'sunomonop.jpg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'batataf',
+                        name: 'Batata Frita 300g.',
+                        description: ' ',
+                        price: 25.50,
+                        image: 'batataf.jpg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'iscast',
+                        name: 'Iscas de tilápia 300g.',
+                        description: 'Filé de tilápia empanada e molho',
+                        price: 50.00,
+                        image: 'iscastilapia.jpeg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'tcamarao',
+                        name: 'Tempurá de camarão 200g.',
+                        description: 'Camarão empanado e molho',
+                        price: 68.00,
+                        image: 'tcamarao.jpg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'tcamaraor',
+                        name: 'Tempurá de camarão rosa 200g.',
+                        description: 'Camarão empanado e molho',
+                        price: 100.00,
+                        image: 'tcamaraor.jpg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    
+                ]
+            }
+            
+            ,
+
+            {
+                category: 'Niguiri Sushi 2 unidades',
+                items: [
+                    {
+                        id: 'nigiriebi',
+                        name: 'Niguiri Ebi',
+                        description: 'Arroz, nori, camarão empanado e tarê',
+                        price: 33.00,
+                        image: 'nigiriebi.jpeg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'nigiris',
+                        name: 'Niguiri de salmão',
+                        description: 'Arroz e filé de salmão',
+                        price: 15.00,
+                        image: 'nigiris.jpeg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'nigirif',
+                        name: 'Niguiri Flambado',
+                        description: 'Arroz, filé de salmão, cream cheese, cebolinha, gergelim torrado e molho tarê',
+                        price: 18.00,
+                        image: 'nigirif.jpeg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'nigirit',
+                        name: 'Niguiri Trufado',
+                        description: 'Arroz, filé de salmão, azeite trufado, e flor de sal, flambados',
+                        price: 25.00,
+                        image: 'nigirit.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'nigiric',
+                        name: 'Niguiri do Chef',
+                        description: 'Arroz, filé de salmão, cream cheese e ovas de peixe',
+                        price: 25.00,
+                        image: 'nigiric.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'nigirife',
+                        name: 'Niguiri Flambado Especial',
+                        description: 'Arroz, filé de salmão e molho ponzu',
+                        price: 22.00,
+                        image: 'nigirife.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'nigirir',
+                        name: 'Niguiri Roll',
+                        description: 'Arroz, filé de salmão flambado, maionese japonesa e crispy de cebola',
+                        price: 25.00,
+                        image: 'nigirir.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+
+                ]
+            }
+            ,
+            {
+                category: 'Sashimi',
+                items: [
+                    {
+                        id: 'salmaof',
+                        name: 'Salmão unidade',
+                        description: 'Filé de salmão',
+                        price: 8.00,
+                        image: 'salmaof.jpeg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'salmao5',
+                        name: 'Salmão 5 unidades',
+                        description: 'Filé de salmão',
+                        price: 35.00,
+                        image: 'salmaof.jpeg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'salmao10',
+                        name: 'Salmão 10 unidades',
+                        description: 'Filé de salmão',
+                        price: 65.00,
+                        image: 'salmaof.jpeg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'salmao15',
+                        name: 'Salmão 15 unidades',
+                        description: 'Filé de salmão',
+                        price: 90.00,
+                        image: 'salmaof.jpeg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'salmaoflam',
+                        name: 'Salmão flambado 5 unidades',
+                        description: 'Salmão fresco flambado ao molho ponzu e flor de sal',
+                        price: 40.00,
+                        image: 'salmaoflam.jpeg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'salmaomara',
+                        name: 'Salmão flambado ao molho de maracujá 5 unidades',
+                        description: 'Salmão fresco flambado ao molho de maracujá',
+                        price: 40.00,
+                        image: 'salmaomara.jpeg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'sashimitaiflam',
+                        name: 'Sashimi tai flambado 5 unidades',
+                        description: 'Salmão fresco flambado ao molho tare e molho agridoce de pimenta',
+                        price: 40.00,
+                        image: 'sashimitaiflam.jpeg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+
+                ]
+            }
+            ,
+            {
+                category: 'Dyos Especiais',
+                items: [
+                    {
+                        id: 'dyos',
+                        name: 'Dyo de salmão 2 unidades',
+                        description: 'Filé de salmão envolvido no arroz, salmão batido com  cream cheese e cebolinha',
+                        price: 22.00,
+                        image: 'dyos.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'dyosp',
+                        name: 'Dyo de salmão premium 2 unidades',
+                        description: 'Filé de salmão envolvido no arroz, com  cream cheese e ovas de peixe',
+                        price: 25.00,
+                        image: 'dyosp.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'dyosm',
+                        name: 'Dyo de salmão c/ geléia de maracujá 2 unidades',
+                        description: 'Filé de salmão envolvido no arroz, com  cream cheese e geléia de maracujá',
+                        price: 24.00,
+                        image: 'dyosm.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                     {
+                        id: 'dyoe',
+                        name: 'Dyo Ebi 2 unidades',
+                        description: 'Filé de salmão envolvido no camarão empanado, com  cream cheese e molho de pimenta agridoce',
+                        price: 30.00,
+                        image: 'dyoe.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'dyoc',
+                        name: 'Dyo do chef 2 unidades',
+                        description: 'Filé de salmão envolvido no arroz, salmão batido com cebolinha picada e uma fatia de limão flambados',
+                        price: 30.00,
+                        image: 'dyoc.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'dyou',
+                        name: 'Dyo Umi 2 unidades',
+                        description: 'Filé de salmão envolvido no arroz, cream cheese e geléia de amora',
+                        price: 24.00,
+                        image: 'dyou.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'dyot',
+                        name: 'Dyo Tai 2 unidades',
+                        description: 'Filé de salmão envolvido no arroz, salmão batido com cream cheese e molho agridoce de pimenta',
+                        price: 24.00,
+                        image: 'dyot.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'dyosf',
+                        name: 'Dyo de salmão flambado 6 unidades',
+                        description: 'Filé de salmão flambado envolvido no salmão empanado com cream cheese, molho agridoce de pimenta, tarê e gergelim torrado',
+                        price: 41.00,
+                        image: 'dyosf.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'dyocap',
+                        name: 'Dyo capitão 4 unidades',
+                        description: 'Filé de salmão envolvido no arroz, cream cheese, molho tarê, molho agridoce de pimenta, gergelim moido, flambados',
+                        price: 36.00,
+                        image: 'dyocap.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'dyocapp',
+                        name: 'Dyo capitão premium 2 unidades',
+                        description: 'Filé de salmão envolvido no arroz, cream cheese, molho de misso, tarê, molho agridoce de pimenta, gergelim moido, flambados',
+                        price: 24.00,
+                        image: 'dyocapp.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                     {
+                        id: 'dyor',
+                        name: 'Dyo roll 2 unidades',
+                        description: 'Filé de salmão envolvido no arroz, cream cheese, geléia de pimenta, tarê e crispy de cebola',
+                        price: 24.00,
+                        image: 'dyor.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                     {
+                        id: 'dyorp',
+                        name: 'Dyo roll premium 2 unidades',
+                        description: 'Filé de salmão envolvido no arroz, maionese japonesa, geléia de pimenta e crispy de cebola',
+                        price: 24.00,
+                        image: 'dyorp.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+
+                ]
+            }
+            ,
+            {
+                category: 'Hossomaki 8 unidades',
+                items: [
+                    {
+                        id: 'kappamaki',
+                        name: 'Kappamaki',
+                        description: 'Nori, arroz, kani e pepino japonês',
+                        price: 16.00,
+                        image: 'kappamaki.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'shakemaki',
+                        name: 'Shakemaki',
+                        description: 'Nori, arroz e salmão',
+                        price: 22.00,
+                        image: 'shakemaki.jpg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+
+                ]
+            }
+            ,
+            {
+                category: 'Hots Especiais 10 unidades',
+                items: [
+                    {
+                        id: 'hotr',
+                        name: 'Hot Roll',
+                        description: 'Arroz, nori, salmão, cream cheese e molha tarê',
+                        price: 27.50,
+                        image: 'hotr.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'hotb',
+                        name: 'Hot Barbecue',
+                        description: 'Arroz, nori, salmão, cream cheese, molho barbecue e cebolinha',
+                        price: 29.50,
+                        image: 'hotb.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'hott',
+                        name: 'Hot Tai',
+                        description: 'Arroz, nori, salmão, cream cheese, molho de pimenta agridoce',
+                        price: 29.50,
+                        image: 'hott.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'hotu',
+                        name: 'Hot Umi',
+                        description: 'Arroz, nori, salmão, salmão grelhado, cream cheese, molho tarê',
+                        price: 31.00,
+                        image: 'hotu.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'hotto',
+                        name: 'Hot Tokyo',
+                        description: 'Arroz, nori, salmão, cream cheese, molho de pimenta agridoce, tarê e gergelim moido',
+                        price: 30.50,
+                        image: 'hotto.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+
+                ]
+            }
+            ,
+            {
+                category: 'Pratos Kids',
+                items: [
+                    {
+                        id: 'sensei',
+                        name: 'Sensei',
+                        description: 'Arroz, iscas de filé mignon, batata frita e cenoura',
+                        price: 31.00,
+                        image: 'sensei.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'maki',
+                        name: 'Maki',
+                        description: 'Arroz, iscas de tilápia, batata frita e cenoura',
+                        price: 28.00,
+                        image: 'maki.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+
+                ]
+            }
+            ,
+            {
+                category: 'Grelhados e Pratos Quentes',
+                items: [
+                    {
+                        id: 'yakissoba',
+                        name: 'Yakissoba ao molho',
+                        description: 'Filé mignon, macarrão, cenoura, brócolis, couve-flor, repolho, cebolinha, cebola e molho especial',
+                        price: 43.00,
+                        image: 'yakissoba.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'salmaogl',
+                        name: 'Salmão grelhado com legumes',
+                        description: 'Salmão grelhado, arroz branco e legumes',
+                        price: 75.00,
+                        image: 'salmaogl.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'salmaoglm',
+                        name: 'Salmão ao molho de maracujá',
+                        description: 'Salmão grelhado, arroz branco, legumes e molho de maracujá',
+                        price: 75.00,
+                        image: 'salmaoglm.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'soba',
+                        name: 'Sobá',
+                        description: 'Filé mignon, macarrão, omelete, cebolinha e molho especial',
+                        price: 40.00,
+                        image: 'soba.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+
+                ]
+            }
+            ,
+            {
+                category: 'Uramaki 8 unidades',
+                items: [
+                    {
+                        id: 'alcapone',
+                        name: 'Alcapone',
+                        description: 'Arroz, nori, gergelim torrado, tomate seco, rucula e cream cheese',
+                        price: 31.50,
+                        image: 'alcapone.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'ucalifornia',
+                        name: 'Califórnia',
+                        description: 'Arroz, nori, gergelim torrado, pepino, kani e manga',
+                        price: 25.50,
+                        image: 'ucalifornia.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'ufiladenfia',
+                        name: 'Filadélfia',
+                        description: 'Arroz, nori, gergelim torrado, filé de salmão fresco e cream cheese',
+                        price: 35.00,
+                        image: 'ufiladelfia.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'usake',
+                        name: 'Sake',
+                        description: 'Arroz, nori, gergelim torrado, salmão grelhado, cebolinha e cream cheese',
+                        price: 33.50,
+                        image: 'usake.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'usakee',
+                        name: 'Sake especial',
+                        description: 'Arroz, nori, gergelim torrado, salmão flambado, salmão grelhado, cebolinha, cream cheese e molho tarê',
+                        price: 39.50,
+                        image: 'usakee.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    //{
+                     //   id: 'usaket',
+                     //  name: 'Sake Tokyo',
+                     //   description: 'Arroz, nori, gergelim torrado, salmão grelhado, cebolinha, cream cheese, molho tarê e molho de pimenta agridoce',
+                      //  price: 36.00,
+                     //   image: 'usaket.png'          // EXEMPLO: coloque sua imagem aqui
+                   // },
+                    {
+                        id: 'usaket',
+                        name: 'Sake Tokyo',
+                        description: 'Arroz, nori, gergelim torrado, salmão grelhado, cebolinha, cream cheese, molho tarê e molho de pimenta agridoce',
+                        price: 36.00,
+                        image: 'usaket.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'usakep',
+                        name: 'Sake Premium',
+                        description: 'Arroz, nori, gergelim torrado, salmão grelhado, cebolinha, cream cheese, molho de ostra, molho de missô e chips de batata doce',
+                        price: 39.50,
+                        image: 'usakep.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'uebitem',
+                        name: 'Ebitem',
+                        description: 'Arroz, nori, gergelim torrado, camarão empanado, cream cheese e molho tarê',
+                        price: 42.00,
+                        image: 'uebitem.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'uebitemu',
+                        name: 'Ebitem Umi',
+                        description: 'Salmão fresco, arroz, nori, gergelim torrado, camarão empanado, cream cheese e molho tarê',
+                        price: 47.50,
+                        image: 'uebitemu.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'uebitemuf',
+                        name: 'Ebitem Umi Flambado',
+                        description: 'Salmão flambado, arroz, nori, gergelim torrado, camarão empanado, cream cheese e molho tarê',
+                        price: 48.50,
+                        image: 'uebitemuf.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'uumi',
+                        name: 'Umi',
+                        description: 'Arroz, nori, gergelim torrado, salmão empanado, cream cheese e molho tarê',
+                        price: 37.50,
+                        image: 'uumi.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'uumie',
+                        name: 'Umi Especial',
+                        description: 'Arroz, nori, gergelim torrado, salmão batido com cebolinha, cream cheese e molho de pimenta agridoce',
+                        price: 37.00,
+                        image: 'uumie.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'uumic',
+                        name: 'Umi do Chef',
+                        description: 'Arroz, nori, gergelim torrado, salmão grelhado, cream cheese, cebolinha, salmão batido e molho de pimenta agridoce',
+                        price: 38.00,
+                        image: 'uumic.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'uumip',
+                        name: 'Umi Premium',
+                        description: 'Salmão fresco, arroz, nori, gergelim torrado, salmão empanado, cream cheese e molho tarê',
+                        price: 46.00,
+                        image: 'uumip.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'ufiladelfiae',
+                        name: 'Filadélfia Especial',
+                        description: 'Arroz, nori, gergelim torrado, filé de salmão fresco e cream cheese envolvido por fatias de salmão, geléia de amora, raspas de limão siciliano e flor de sal e flor de sal',
+                        price: 40.00,
+                        image: 'ufiladelfiae.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'ufiladelfiap',
+                        name: 'Filadélfia Premium',
+                        description: 'Arroz, nori, gergelim torrado, filé de salmão fresco e cream cheese envolvido por fatias de salmão flambado, maionese japonesa e crispy de cebola',
+                        price: 42.00,
+                        image: 'ufiladelfiap.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'uumir',
+                        name: 'Umi Roll',
+                        description: 'Arroz, nori, gergelim torrado, salmão empanado, cream cheese, maionese japonesa e crispy de cebola',
+                        price: 39.00,
+                        image: 'uumir.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+
+
+                ]
+            }
+            ,
+            {
+                category: 'Temaki',
+                items: [
+                    {
+                        id: 'sakura',
+                        name: 'Sakura',
+                        description: 'Arroz, nori, salmão em cubos com cebolinha e cream chesse sem misturar',
+                        price: 36.00,
+                        image: 'sakura.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'sakuras',
+                        name: 'Sakura sem arroz',
+                        description: 'Nori, salmão em cubos com cebolinha e cream chesse sem misturar',
+                        price: 40.00,
+                        image: 'sakuras.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'sake',
+                        name: 'Sake',
+                        description: 'Arroz, nori, salmão empanado com cream chesse e molho tarê',
+                        price: 38.50,
+                        image: 'sake.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'sakes',
+                        name: 'Sake sem arroz',
+                        description: 'Nori, salmão empanado com cream chesse e molho tarê',
+                        price: 42.00,
+                        image: 'sakes.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'umi',
+                        name: 'Umi',
+                        description: 'Arroz, nori, salmão grelhado e cream chesse',
+                        price: 31.00,
+                        image: 'umi.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'umis',
+                        name: 'Umi sem arroz',
+                        description: 'Nori, salmão grelhado e cream chesse',
+                        price: 38.50,
+                        image: 'umis.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'umie',
+                        name: 'Umi especial',
+                        description: 'Arroz, nori, salmão batido com cebolinha e cream chesse misturado',
+                        price: 31.50,
+                        image: 'umie.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'umies',
+                        name: 'Umi especial sem arroz',
+                        description: 'Nori, salmão batido com cebolinha e cream chesse misturado',
+                        price: 38.00,
+                        image: 'umies.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'umite',
+                        name: 'Umi tai especial',
+                        description: 'Arroz, nori, salmão batido com cebolinha e cream chesse misturado, molho de pimenta agridoce',
+                        price: 32.50,
+                        image: 'umite.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'umites',
+                        name: 'Umi tai especial sem arroz',
+                        description: 'Nori, salmão batido com cebolinha e cream chesse misturado, molho de pimenta agridoce',
+                        price: 39.50,
+                        image: 'umites.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'camaraoe',
+                        name: 'Camarão empanado',
+                        description: 'Arroz, nori, camarão empanado com cream chesse e molho tarê',
+                        price: 42.00,
+                        image: 'camaraoe.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'camaraoes',
+                        name: 'Camarão empanado sem arroz',
+                        description: 'Nori, camarão empanado com cream chesse e molho tarê',
+                        price: 50.00,
+                        image: 'camaraoes.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'california',
+                        name: 'Califórnia',
+                        description: 'Arroz, nori, pepino, kani e manga',
+                        price: 26.50,
+                        image: 'california.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'californias',
+                        name: 'Califórnia sem arroz',
+                        description: 'Nori, pepino, kani e manga',
+                        price: 30.00,
+                        image: 'californias.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    
+                ]
+            }
+            ,
+            {
+                category: 'Combinados',
+                items: [
+                    {
+                        id: 'combinado1',
+                        name: 'Combinado 01 - 24 unidades',
+                        description: '02 niguiri de salmão <br> 04 uramaki filadélfia <br> 04 uramaki califórnia <br> 04 hossomaki shakemaki <br> 10 hot roll',
+                        price: 75.00,
+                        image: 'combinado.jpg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'combinado2',
+                        name: 'Combinado 02 - 25 unidades',
+                        description: '05 sashimi de salmão <br> 02 niguiri flambados <br> 02 niguiri de salmão <br> 08 uramaki filadélfia <br> 08 uramaki alcapone',
+                        price: 108.00,
+                        image: 'combinado.jpg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'combinado3',
+                        name: 'Combinado 03 - 39 unidades',
+                        description: '05 sashimi de salmão <br> 08 hossomaki shakemaki <br> 08 uramaki fladélfia <br> 08 uramaki sake <br> 10 hot roll',
+                        price: 124.00,
+                        image: 'combinado.jpg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'combinado4',
+                        name: 'Combinado 04 - 58 unidades',
+                        description: '08 sashimi de salmão <br> 08 hossomaki shakemaki <br> 08 hossomaki kappamaki <br> 08 uramaki sake especial <br> 08 uramaki umi do chef <br> 08 uramaki filadélfia <br> 10 hot roll',
+                        price: 196.00,
+                        image: 'combinado.jpg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'combinado5',
+                        name: 'Combinado 05 - 68 unidades',
+                        description: '10 sashimi de salmão <br> 08 hossomaki shakemaki <br> 08 uramaki sake tokyo <br> 08 uramaki umi especial <br> 08 uramaki filadélfia <br> 08 uramaki ebiten <br> 08 uramaki umi <br> 10 hot roll',
+                        price: 253.00,
+                        image: 'combinado.jpg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'combinadoc',
+                        name: 'Combinado do chef - 31 unidades',
+                        description: '05 sashimi de salmão <br> 02 dyo umi <br> 02 dyo capitão premium <br> 02 dyo capitão <br> 02 dyo roll premium <br> 02 dyo ebi <br> 04 uramaki filadélfia especial <br> 04 uramaki filadélfia premium <br> 8 uramaki umi roll',
+                        price: 235.00,
+                        image: 'combinado.jpg'          // EXEMPLO: coloque sua imagem aqui
+                    },
+
+                ]
+            }
+            ,
+            {
+                category: 'Sobremesa',
+                items: [
+                    {
+                        id: 'sorvete1',
+                        name: 'Sorvete 1 bola',
+                        description: 'Sorvete de creme com ganache',
+                        price: 15.00,
+                        image: 'sorvete1.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'sorvete2',
+                        name: 'Sorvete 2 bolas',
+                        description: 'Sorvete de creme com ganache',
+                        price: 23.00,
+                        image: 'sorvete2.png'          // EXEMPLO: coloque sua imagem aqui
+                    },
+
+                ]
+            }
+            ,
+
+
+
+            
+            {
+                category: 'Bebidas',
+                items: [
+                    {
+                        id: 'agua-c-gas',
+                        name: 'Água com gás',
+                      description: ' ',
+                        price: 6.00,
+                        image: 'aguacgas.png'     // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'agua-s-gas',
+                        name: 'Água sem gás',
+                        description: ' ',
+                        price: 6.00,
+                        image: 'aguasgas.jpg'         // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'cocalata',
+                        name: 'Coca-Cola lata 350ml',
+                        description: ' ',
+                        price: 7.50,
+                        image: 'cocalata.jpg'         // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'cocazero',
+                        name: 'Coca-Cola Zero lata 350ml',
+                        description: ' ',
+                        price: 7.50,
+                        image: 'cocazero.jpeg'            // EXEMPLO: coloque sua imagem aqui
+                    },
+                    {
+                        id: 'spritelata',
+                        name: 'Sprite lata 350ml',
+                        description: ' ',
+                        price: 7.50,
+                        image: 'sprite.jpg'     // EXEMPLO: coloque sua imagem aqui
+                    },
+                     {
+                        id: 'fanta',
+                        name: 'Fanta lata 350ml',
+                        description: ' ',
+                        price: 7.50,
+                        image: 'fanta.png'            // EXEMPLO: coloque sua imagem aqui
+                    },
+                     {
+                        id: 'guarana',
+                        name: 'Guaraná Antartica lata 350ml',
+                        description: ' ',
+                        price: 7.50,
+                        image: 'guarana.jpg'            // EXEMPLO: coloque sua imagem aqui
+                    },
+                     {
+                        id: 'laranja',
+                        name: 'Suco de laranja natural 300ml',
+                        description: ' ',
+                        price: 10.00,
+                        image: 'laranja.jpeg'            // EXEMPLO: coloque sua imagem aqui
+                    },
+                     {
+                        id: 'abacaxi',
+                        name: 'Suco de abacaxi polpa 300ml',
+                        description: ' ',
+                        price: 10.00,
+                        image: 'abacaxi.png'            // EXEMPLO: coloque sua imagem aqui
+                    },
+                     {
+                        id: 'abacaxi-hortela',
+                        name: 'Suco de abacaxi com hortelã polpa 300ml',
+                        description: ' ',
+                        price: 10.00,
+                        image: 'abacaxih.jpeg'            // EXEMPLO: coloque sua imagem aqui
+                    },
+                       {
+                        id: 'acerola',
+                        name: 'Suco de acerola polpa 300ml',
+                        description: ' ',
+                        price: 10.00,
+                        image: 'acerola.jpg'            // EXEMPLO: coloque sua imagem aqui
+                    },
+                     {
+                        id: 'maracuja',
+                        name: 'Suco de maracujá polpa 300ml',
+                        description: ' ',
+                        price: 10.00,
+                        image: 'maracuja.jpeg'            // EXEMPLO: coloque sua imagem aqui
+                    },
+                     {
+                        id: 'morango',
+                        name: 'Suco de morango polpa 300ml',
+                        description: ' ',
+                        price: 10.00,
+                        image: 'morango.jpeg'            // EXEMPLO: coloque sua imagem aqui
+                    },
+                       {
+                        id: 'goiaba',
+                        name: 'Suco de goiaba polpa 300ml',
+                        description: ' ',
+                        price: 10.00,
+                        image: 'goiaba.jpeg'            // EXEMPLO: coloque sua imagem aqui
+                    },
+                       {
+                        id: 'bud',
+                        name: 'Budweiser long neck 330ml',
+                        description: ' ',
+                        price: 8.50,
+                        image: 'bud.png'            // EXEMPLO: coloque sua imagem aqui
+                    },
+                         {
+                        id: 'heineken',
+                        name: 'Heineken long neck 330ml',
+                        description: ' ',
+                        price: 11.00,
+                        image: 'heineken.jpg'            // EXEMPLO: coloque sua imagem aqui
+                    },
+                         {
+                        id: 'corona',
+                        name: 'Corona long neck 330ml',
+                        description: ' ',
+                        price: 11.00,
+                        image: 'corona.jpeg'            // EXEMPLO: coloque sua imagem aqui
+                    },
+                         {
+                        id: 'original',
+                        name: 'Antártica original 600ml',
+                        description: ' ',
+                        price: 13.00,
+                        image: 'original.jpeg'            // EXEMPLO: coloque sua imagem aqui
+                    }
+                    
+
+
+
+
+
+
+
+
+
+
+
+                    // ADICIONE MAIS BEBIDAS AQUI seguindo o mesmo padrão
+                ]
+            }
+            // PARA ADICIONAR NOVA CATEGORIA, copie este formato:
+            // {
+            //     category: 'Nome da Categoria',
+            //     items: [
+            //         {
+            //             id: 'produto-id',
+            //             name: 'Nome do Produto',
+            //             description: 'Descrição do produto.',
+            //             price: 0.00,
+            //             image: 'produto.jpeg'
+            //         }
+            //     ]
+            // }
+        ];
+
+        // ===================================
+        // ESTADO DA APLICAÇÃO (VARIÁVEIS GLOBAIS)
+        // ===================================
+        // Estas variáveis armazenam o estado atual da aplicação
+        let openCategories = new Set();
+
+        let cart = {};          // Carrinho de compras (objeto com produtos)
+        let customer = {        // Dados do cliente
+            name: '',
+            phone: '',
+            hashis: 1,
+            adaptador: false,
+            quantidadeAdaptador: 0,
+            formaPagamento: '',
+            tipoEntrega: '',
+            endereco: {
+                rua: '',
+                numero: '',
+                bairro: '',
+                pontoReferencia: ''
+            },
+            informacoesExtra: ''
+        };
+        let searchTerm = '';    // Termo atual da busca
+
+        // ===================================
+        // FUNÇÕES UTILITÁRIAS
+        // ===================================
+        // Funções de apoio para formatação e validação
+        
+        // Formata valores monetários para real brasileiro
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(value);
+        }
+
+        // Formata telefone com máscara brasileira
+        // Suporta formatos: (XX) XXXX-XXXX e (XX) 9XXXX-XXXX
+        function formatPhone(phone) {
+            const cleaned = phone.replace(/\D/g, '');
+            
+            if (cleaned.length <= 10) {
+                // Formato: (XX) XXXX-XXXX
+                return cleaned.replace(/^(\d{0,2})(\d{0,4})(\d{0,4}).*/, (_, a, b, c) => {
+                    return [
+                        a ? `(${a}` : '',
+                        a && a.length === 2 ? ') ' : '',
+                        b || '',
+                        b && b.length === 4 && c ? '-' : '',
+                        c || ''
+                    ].join('');
+                });
+            } else {
+                // Formato: (XX) 9XXXX-XXXX
+                const limited = cleaned.slice(0, 11);
+                return limited.replace(/^(\d{0,2})(\d{0,5})(\d{0,4}).*/, (_, a, b, c) => {
+                    return [
+                        a ? `(${a}` : '',
+                        a && a.length === 2 ? ') ' : '',
+                        b || '',
+                        b && b.length === 5 && c ? '-' : '',
+                        c || ''
+                    ].join('');
+                });
+            }
+        }
+
+        // Remove formatação do telefone (retorna só números)
+        function cleanPhone(phone) {
+            return phone.replace(/\D/g, '');
+        }
+
+        // ===================================
+        // FUNÇÕES DE PERSISTÊNCIA (LOCALSTORAGE)
+        // ===================================
+        // Salva e carrega dados do navegador para manter estado
+        
+        // Salva carrinho e dados do cliente no localStorage
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem('sushi_cart_v1', JSON.stringify(cart));
+                localStorage.setItem('sushi_customer_v1', JSON.stringify(customer));
+            } catch (error) {
+                console.warn('Falha ao salvar no localStorage:', error);
+            }
+        }
+
+        // Carrega dados salvos do localStorage
+        function loadFromLocalStorage() {
+            try {
+                const savedCart = localStorage.getItem('sushi_cart_v1');
+                const savedCustomer = localStorage.getItem('sushi_customer_v1');
+                
+                if (savedCart) {
+                    cart = JSON.parse(savedCart);
+                }
+                
+                if (savedCustomer) {
+                    const parsedCustomer = JSON.parse(savedCustomer);
+                    customer = {
+                        ...customer,
+                        ...parsedCustomer,
+                        endereco: {
+                            rua: '',
+                            numero: '',
+                            bairro: '',
+                            pontoReferencia: '',
+                            ...parsedCustomer.endereco
+                        }
+                    };
+                }
+            } catch (error) {
+                console.warn('Falha ao carregar do localStorage:', error);
+            }
+        }
+
+        // ===================================
+        // FUNÇÕES DE RENDERIZAÇÃO (ATUALIZAÇÕES DA TELA)
+        // ===================================
+        // Atualizam o HTML baseado no estado atual da aplicação
+        
+        // Renderiza o menu de produtos com filtro de busca
+// ===================================
+// RENDERIZAÇÃO DO MENU COM CATEGORIAS EXPANDÍVEIS
+// ===================================
+function renderMenu() {
+    const menuContainer = document.getElementById('menu-container');
+    const noResults = document.getElementById('no-results');
+    const resultsBadge = document.getElementById('results-badge');
+
+    // Filtra produtos pelo termo de busca
+    const filteredCatalog = CATALOG.map(category => ({
+        ...category,
+        items: category.items.filter(item => {
+            const searchLower = searchTerm.toLowerCase().trim();
+            if (!searchLower) return true;
+            return (
+                item.name.toLowerCase().includes(searchLower) ||
+                item.description.toLowerCase().includes(searchLower)
+            );
+        })
+    })).filter(category => category.items.length > 0);
+
+    // Mostrar/esconder aviso "nenhum resultado"
+    if (filteredCatalog.length === 0) {
+        menuContainer.classList.add('hidden');
+        noResults.classList.remove('hidden');
+        resultsBadge.classList.add('hidden');
+        return;
+    } else {
+        menuContainer.classList.remove('hidden');
+        noResults.classList.add('hidden');
+        const totalResults = filteredCatalog.reduce((s, c) => s + c.items.length, 0);
+        if (searchTerm) {
+            resultsBadge.textContent = `${totalResults} resultados`;
+            resultsBadge.classList.remove('hidden');
+        } else {
+            resultsBadge.classList.add('hidden');
+        }
+    }
+
+    // Renderizar categorias (todas fechadas por padrão)
+    menuContainer.innerHTML = filteredCatalog.map((category, index) => `
+        <div class="space-y-4">
+            <h3 
+                class="text-xl font-semibold text-gray-900 border-l-4 border-green-600 pl-3 cursor-pointer"
+                onclick="toggleCategory(${index})"
+            >
+                ${category.category}
+            </h3>
+            <div id="category-${index}" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-4">
+                ${category.items.map(item => `
+                    <div class="product-card group relative gradient-card border border-gray-300 rounded-xl p-4 shadow-card">
+                        <div class="w-20 h-20 rounded-lg mb-3 overflow-hidden bg-gray-100">
+                            <img
+                                src="${item.image}"
+                                alt="${item.name}"
+                                class="w-full h-full object-cover"
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                            />
+                            <div class="w-full h-full gradient-logo flex items-center justify-center text-2xl" style="display: none;">
+                                🍣
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <h3 class="font-semibold text-gray-900">${item.name}</h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">${item.description}</p>
+                            <div class="flex items-center justify-between pt-2">
+                                <span class="text-lg font-bold text-success">
+                                    ${formatCurrency(item.price)}
+                                </span>
+                                ${cart[item.id] ? `
+                                    <div class="flex items-center gap-2 bg-gray-100 border border-gray-300 rounded-lg overflow-hidden">
+                                        <button class="qty-btn destructive" onclick="decrementItem('${item.id}')">-</button>
+                                        <span class="min-w-[24px] text-center font-semibold text-sm">${cart[item.id].qty}</span>
+                                        <button class="qty-btn primary" onclick="incrementItem('${item.id}')">+</button>
+                                    </div>
+                                ` : `
+                                    <button 
+                                        class="btn-sushi px-4 py-2 rounded-lg text-sm font-medium shadow-elegant"
+                                        onclick="addToCart('${item.id}')"
+                                    >
+                                        Adicionar
+                                    </button>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
+    openCategories.forEach(index => {
+    const categoryDiv = document.getElementById(`category-${index}`);
+    if (categoryDiv) categoryDiv.classList.remove('hidden');
+});
+}
+
+// Função para expandir/fechar categorias
+function toggleCategory(index) {
+    const categoryDiv = document.getElementById(`category-${index}`);
+    if (categoryDiv.classList.contains('hidden')) {
+        categoryDiv.classList.remove('hidden');
+        openCategories.add(index); // lembra que essa ficou aberta
+    } else {
+        categoryDiv.classList.add('hidden');
+        openCategories.delete(index); // tira da lista das abertas
+    }
+}
+
+
+        function renderCart() {
+            const emptyCart = document.getElementById('empty-cart');
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            const cartBadge = document.getElementById('cart-badge');
+            const clearCartBtn = document.getElementById('clear-cart');
+            const totalPriceEl = document.getElementById('total-price');
+
+            const cartItemsArray = Object.values(cart);
+            const totalItems = cartItemsArray.reduce((sum, item) => sum + item.qty, 0);
+            const totalPrice = cartItemsArray.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            // Atualizar badge e botão limpar
+            cartBadge.textContent = `${totalItems} ${totalItems === 1 ? 'item' : 'itens'}`;
+            
+            if (totalItems > 0) {
+                clearCartBtn.classList.remove('hidden');
+            } else {
+                clearCartBtn.classList.add('hidden');
+            }
+
+            // Renderizar itens ou mensagem vazia
+            if (cartItemsArray.length === 0) {
+                emptyCart.classList.remove('hidden');
+                cartItems.classList.add('hidden');
+                cartTotal.classList.add('hidden');
+            } else {
+                emptyCart.classList.add('hidden');
+                cartItems.classList.remove('hidden');
+                cartTotal.classList.remove('hidden');
+
+                cartItems.innerHTML = cartItemsArray.map(item => `
+                    <div class="flex items-start justify-between p-3 bg-gray-100 border border-gray-300 rounded-lg">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-semibold text-gray-900 truncate">
+                                ${item.name}
+                            </h4>
+                            <p class="text-sm text-gray-600">
+                                ${formatCurrency(item.price)} un.
+                            </p>
+                            <p class="text-sm font-medium text-success">
+                                Subtotal: ${formatCurrency(item.price * item.qty)}
+                            </p>
+                        </div>
+                        
+                        <div class="flex flex-col items-end gap-2 ml-3">
+                            <div class="flex items-center gap-1 bg-white border border-gray-300 rounded-lg overflow-hidden">
+                                <button 
+                                    class="qty-btn destructive" 
+                                    onclick="decrementItem('${item.id}')"
+                                >
+                                    -
+                                </button>
+                                
+                                <span class="min-w-[28px] text-center font-semibold text-sm px-1">
+                                    ${item.qty}
+                                </span>
+                                
+                                <button 
+                                    class="qty-btn primary" 
+                                    onclick="incrementItem('${item.id}')"
+                                >
+                                    +
+                                </button>
+                            </div>
+                            
+                            <button 
+                                class="px-2 py-1 text-xs rounded bg-red-500 text-white hover:bg-red-600 transition-colors"
+                                onclick="removeFromCart('${item.id}')"
+                            >
+                                Remover
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+
+                totalPriceEl.textContent = formatCurrency(totalPrice);
+            }
+
+            updateCheckoutButton();
+        }
+
+        function renderForm() {
+            // Preencher campos do formulário com dados salvos
+            document.getElementById('customer-name').value = customer.name;
+            document.getElementById('customer-phone').value = customer.phone;
+            document.getElementById('hashis').value = customer.hashis;
+            
+            // Adaptador
+            const adaptadorRadios = document.querySelectorAll('input[name="adaptador"]');
+            adaptadorRadios.forEach(radio => {
+                radio.checked = (radio.value === 'sim') === customer.adaptador;
+            });
+            
+            const qtdAdaptadorContainer = document.getElementById('qtd-adaptador-container');
+            if (customer.adaptador) {
+                qtdAdaptadorContainer.classList.remove('hidden');
+                document.getElementById('qtd-adaptador').value = customer.quantidadeAdaptador;
+            } else {
+                qtdAdaptadorContainer.classList.add('hidden');
+            }
+
+            // Forma de pagamento
+            document.getElementById('forma-pagamento').value = customer.formaPagamento;
+
+            // Tipo de entrega
+            const tipoEntregaRadios = document.querySelectorAll('input[name="tipoEntrega"]');
+            tipoEntregaRadios.forEach(radio => {
+                radio.checked = radio.value === customer.tipoEntrega;
+            });
+
+            // Endereço
+            const enderecoContainer = document.getElementById('endereco-container');
+            if (customer.tipoEntrega === 'entrega') {
+                enderecoContainer.classList.remove('hidden');
+                document.getElementById('rua').value = customer.endereco.rua;
+                document.getElementById('numero').value = customer.endereco.numero;
+                document.getElementById('bairro').value = customer.endereco.bairro;
+                document.getElementById('ponto-referencia').value = customer.endereco.pontoReferencia;
+            } else {
+                enderecoContainer.classList.add('hidden');
+            }
+
+            // Informações extras
+            document.getElementById('info-extra').value = customer.informacoesExtra;
+        }
+
+        function updateCheckoutButton() {
+            const checkoutBtn = document.getElementById('checkout-btn');
+            const validationAlerts = document.getElementById('validation-alerts');
+            
+            const cartItemsArray = Object.values(cart);
+            const isValidCustomer = customer.name.trim().length >= 2 && 
+                                   cleanPhone(customer.phone).length >= 10 &&
+                                   customer.formaPagamento !== '' &&
+                                   customer.tipoEntrega !== '' &&
+                                   (customer.tipoEntrega === 'retirada' || 
+                                    (Boolean(customer.endereco.rua.trim()) && Boolean(customer.endereco.numero.trim()) && Boolean(customer.endereco.bairro.trim())));
+
+            const canCheckout = isValidCustomer && cartItemsArray.length > 0;
+
+            checkoutBtn.disabled = !canCheckout;
+            if (canCheckout) {
+                checkoutBtn.style.opacity = '1';
+                checkoutBtn.style.cursor = 'pointer';
+            } else {
+                checkoutBtn.style.opacity = '0.5';
+                checkoutBtn.style.cursor = 'not-allowed';
+            }
+
+            // Mostrar alertas de validação
+            const alerts = [];
+            if (!isValidCustomer) {
+                alerts.push('⚠️ Preencha todos os campos obrigatórios');
+            }
+            if (cartItemsArray.length === 0) {
+                alerts.push('⚠️ Adicione itens ao carrinho');
+            }
+
+            validationAlerts.innerHTML = alerts.map(alert => `
+                <div class="text-xs text-center text-amber-600 bg-amber-50 p-2 rounded-lg border border-amber-200">
+                    ${alert}
+                </div>
+            `).join('');
+        }
+
+        // ===================================
+        // FUNÇÕES DE AÇÃO
+        // ===================================
+        
+        function addToCart(itemId) {
+            const item = CATALOG.flatMap(cat => cat.items).find(item => item.id === itemId);
+            if (!item) return;
+
+            if (cart[itemId]) {
+                cart[itemId].qty += 1;
+            } else {
+                cart[itemId] = { ...item, qty: 1 };
+            }
+
+            saveToLocalStorage();
+            renderMenu();
+            renderCart();
+        }
+
+        function incrementItem(itemId) {
+            if (cart[itemId]) {
+                cart[itemId].qty += 1;
+                saveToLocalStorage();
+                renderMenu();
+                renderCart();
+            }
+        }
+
+        function decrementItem(itemId) {
+            if (cart[itemId]) {
+                if (cart[itemId].qty > 1) {
+                    cart[itemId].qty -= 1;
+                } else {
+                    delete cart[itemId];
+                }
+                saveToLocalStorage();
+                renderMenu();
+                renderCart();
+            }
+        }
+
+        function removeFromCart(itemId) {
+            delete cart[itemId];
+            saveToLocalStorage();
+            renderMenu();
+            renderCart();
+        }
+
+        function clearCart() {
+            if (confirm('Deseja realmente esvaziar o carrinho?')) {
+                cart = {};
+                saveToLocalStorage();
+                renderMenu();
+                renderCart();
+            }
+        }
+
+        function handleSearch() {
+            searchTerm = document.getElementById('search-input').value;
+            const searchBadge = document.getElementById('search-badge');
+            const searchText = document.getElementById('search-text');
+
+            if (searchTerm.trim()) {
+                searchBadge.classList.remove('hidden');
+                searchText.textContent = `Buscando: "${searchTerm}"`;
+            } else {
+                searchBadge.classList.add('hidden');
+            }
+
+            renderMenu();
+        }
+
+        function clearSearch() {
+            document.getElementById('search-input').value = '';
+            searchTerm = '';
+            document.getElementById('search-badge').classList.add('hidden');
+            renderMenu();
+        }
+
+        function checkout() {
+            const cartItemsArray = Object.values(cart);
+            const totalPrice = cartItemsArray.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            // Validar dados
+            const isValidCustomer = customer.name.trim().length >= 2 && 
+                                   cleanPhone(customer.phone).length >= 10 &&
+                                   customer.formaPagamento !== '' &&
+                                   customer.tipoEntrega !== '' &&
+                                   (customer.tipoEntrega === 'retirada' || 
+                                    (Boolean(customer.endereco.rua.trim()) && Boolean(customer.endereco.numero.trim()) && Boolean(customer.endereco.bairro.trim())));
+
+            if (!isValidCustomer || cartItemsArray.length === 0) {
+                alert('Por favor, preencha todos os campos obrigatórios e adicione itens ao carrinho.');
+                return;
+            }
+
+            // Construir mensagem do WhatsApp
+            const lines = [];
+            lines.push('*Olá! Novo pedido do UMI Sushi Bar:*');
+            lines.push('');
+            
+            lines.push(`*Nome:* ${customer.name.trim()}`);
+            lines.push(`*Telefone:* ${customer.phone.trim()}`);
+            lines.push('');
+            
+            lines.push(`*Quantos Hashis:* ${customer.hashis}`);
+            lines.push(` *Adaptador:* ${customer.adaptador ? `Sim (${customer.quantidadeAdaptador})` : 'Não'}`);
+            
+            const formasPagamento = {
+                'dinheiro': 'Dinheiro',
+                'pix': 'PIX',
+                'cartao-credito': 'Cartão de Crédito',
+                'cartao-debito': 'Cartão de Débito'
+            };
+            lines.push(`*Forma de Pagamento:* ${formasPagamento[customer.formaPagamento]}`);
+            lines.push(`*Tipo:* ${customer.tipoEntrega === 'entrega' ? 'Entrega' : 'Retirada'}`);
+            lines.push('');
+            
+            if (customer.tipoEntrega === 'entrega') {
+                lines.push('*Endereço para entrega:*');
+                lines.push(`   Rua: ${customer.endereco.rua}, ${customer.endereco.numero}`);
+                lines.push(`   Bairro: ${customer.endereco.bairro}`);
+                if (customer.endereco.pontoReferencia) {
+                    lines.push(`   Referência: ${customer.endereco.pontoReferencia}`);
+                }
+                lines.push('');
+            }
+            
+            lines.push(' *Itens pedidos:*');
+            cartItemsArray.forEach(item => {
+                lines.push(`• ${item.name} x ${item.qty} = ${formatCurrency(item.price * item.qty)}`);
+            });
+            
+            lines.push('');
+            lines.push(` *Total:* ${formatCurrency(totalPrice)}`);
+            
+            if (customer.informacoesExtra.trim()) {
+                lines.push('');
+                lines.push(` *Observações:* ${customer.informacoesExtra.trim()}`);
+            }
+            
+            lines.push('');
+            lines.push(' ');
+            
+            const message = lines.join('\n');
+            const encodedMessage = encodeURIComponent(message);
+            const phone = RESTAURANT_WHATSAPP.replace(/\D/g, '');
+            const whatsAppUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
+            
+            window.open(whatsAppUrl, '_blank');
+        }
+
+        // ===================================
+        // EVENT LISTENERS
+        // ===================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            loadFromLocalStorage();
+            renderForm();
+            renderMenu();
+            renderCart();
+
+            // Search
+            document.getElementById('search-input').addEventListener('input', handleSearch);
+            document.getElementById('clear-search').addEventListener('click', clearSearch);
+
+            // Customer form
+            document.getElementById('customer-name').addEventListener('input', function(e) {
+                customer.name = e.target.value;
+                saveToLocalStorage();
+                updateCheckoutButton();
+            });
+
+            document.getElementById('customer-phone').addEventListener('input', function(e) {
+                const formatted = formatPhone(e.target.value);
+                e.target.value = formatted;
+                customer.phone = formatted;
+                saveToLocalStorage();
+                updateCheckoutButton();
+            });
+
+            document.getElementById('hashis').addEventListener('change', function(e) {
+                customer.hashis = parseInt(e.target.value);
+                saveToLocalStorage();
+            });
+
+            document.querySelectorAll('input[name="adaptador"]').forEach(radio => {
+                radio.addEventListener('change', function(e) {
+                    const isAdaptador = e.target.value === 'sim';
+                    customer.adaptador = isAdaptador;
+                    customer.quantidadeAdaptador = isAdaptador ? 1 : 0;
+                    saveToLocalStorage();
+                    renderForm();
+                });
+            });
+
+            document.getElementById('qtd-adaptador').addEventListener('change', function(e) {
+                customer.quantidadeAdaptador = parseInt(e.target.value);
+                saveToLocalStorage();
+            });
+
+            document.getElementById('forma-pagamento').addEventListener('change', function(e) {
+                customer.formaPagamento = e.target.value;
+                saveToLocalStorage();
+                updateCheckoutButton();
+            });
+
+            document.querySelectorAll('input[name="tipoEntrega"]').forEach(radio => {
+                radio.addEventListener('change', function(e) {
+                    customer.tipoEntrega = e.target.value;
+                    saveToLocalStorage();
+                    renderForm();
+                    updateCheckoutButton();
+                });
+            });
+
+            // Endereço fields
+            ['rua', 'numero', 'bairro', 'ponto-referencia'].forEach(field => {
+                document.getElementById(field).addEventListener('input', function(e) {
+                    const fieldMap = {
+                        'ponto-referencia': 'pontoReferencia'
+                    };
+                    const customerField = fieldMap[field] || field;
+                    customer.endereco[customerField] = e.target.value;
+                    saveToLocalStorage();
+                    updateCheckoutButton();
+                });
+            });
+
+            document.getElementById('info-extra').addEventListener('input', function(e) {
+                customer.informacoesExtra = e.target.value;
+                saveToLocalStorage();
+            });
+
+            // Cart actions
+            document.getElementById('clear-cart').addEventListener('click', clearCart);
+            document.getElementById('checkout-btn').addEventListener('click', checkout);
+        });
+    </script>
+</body>
+</html>

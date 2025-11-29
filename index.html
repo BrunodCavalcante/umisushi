@@ -2115,5 +2115,28 @@ function toggleCategory(index) {
             document.getElementById('checkout-btn').addEventListener('click', checkout);
         });
     </script>
+
+<div id="contador-visitas" 
+     class="text-sm text-gray-700 mt-4 text-center">
+</div>
+
+<script>
+    // Recupera contador salvo ou inicia em 0
+    let visitas = localStorage.getItem("contador_visitas");
+
+    if (!visitas) {
+        visitas = 1;
+    } else {
+        visitas = parseInt(visitas) + 1;
+    }
+
+    // Salva o novo valor
+    localStorage.setItem("contador_visitas", visitas);
+
+    // Atualiza o texto no rodapé
+    document.getElementById("contador-visitas").innerHTML =
+        "Visitas : " + visitas;
+</script>
+    
 </body>
 </html>
